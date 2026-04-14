@@ -24,13 +24,34 @@ const RynjahComponent = () => {
       { id: 2, name: 'Arduino Uno R3', price: 650, category: 'ECE', stock: 12, image: 'https://images.unsplash.com/photo-1553406830-ef2513450d76?w=400' }
     ];
   });
-  const myProjects = [
+ const myProjects = [
   {
     id: 1,
-    title: "Microprocessor 8085 Setup",
-    description: "Connecting the 8255 PPI to the 8085 trainer kit.",
-    imageUrl: "https://your-image-link.com/photo.jpg", // Replace with your image URL
-    instructions: "Step 1: Connect the data bus..."
+    title: "8085 Microprocessor Setup",
+    description: "Interfacing the 8255 with the 8085 kit.",
+    imageUrl: "https://i.postimg.cc/example/8085.jpg", 
+    instructions: "1. Connect the kit. 2. Enter Hex codes."
+  },
+  {
+    id: 2,
+    title: "Blink LED using Arduino",
+    description: "Simple circuit to blink an LED every 1 second.",
+    imageUrl: "https://i.postimg.cc/example/led.jpg", 
+    instructions: "1. Pin 13 to LED. 2. Upload Blink Sketch."
+  },
+  {
+    id: 3,
+    title: "Bluetooth Control Car",
+    description: "Arduino car controlled via HC-05 and smartphone.",
+    imageUrl: "https://i.postimg.cc/example/car.jpg", 
+    instructions: "1. Pair Bluetooth. 2. Use Android App to steer."
+  },
+  {
+    id: 4,
+    title: "Your New Project Name",
+    description: "Describe what your project does here.",
+    imageUrl: "https://link-to-your-photo.jpg", 
+    instructions: "Step 1... Step 2... Step 3..."
   }
 ];
 
