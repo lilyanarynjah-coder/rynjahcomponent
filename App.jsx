@@ -47,7 +47,7 @@ const RynjahComponent = () => {
 
   const addToCart = (product) => {
     setCart([...cart, product]);
-    alert(${product.name} added to cart!);
+    alert(`${product.name} added to cart!`);
   };
 
   const addProduct = (e) => {
