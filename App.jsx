@@ -153,16 +153,22 @@ const RynjahComponent = () => {
         )}
 
         {/* PROJECT LAB VIEW (UPLOAD + DOWNLOAD + DETAILS) */}
+       {/* VIEW: PROJECT LAB (Beautiful Grid Version) */}
         {view === 'projects' && (
-          <div className="max-w-3xl mx-auto space-y-10">
+          <div className="max-w-6xl mx-auto space-y-10">
+            <header className="text-center">
+              <h2 className="text-4xl font-black text-white">Innovation Lab</h2>
+              <p className="text-slate-400">Step-by-step ECE engineering guides.</p>
+            </header>
+            
             {isLoggedIn && (
-              <div className="bg-slate-800 p-6 rounded-xl border border-blue-500/30 shadow-2xl">
-                <h3 className="text-lg font-bold mb-4 flex items-center gap-2"><Plus size={18} className="text-blue-400"/> Admin: Post Project</h3>
-                <div className="grid gap-4">
-                  <input id="pj-title" placeholder="Project Title" className="bg-slate-900 p-2 rounded border border-slate-700" />
-                  <textarea id="pj-desc" placeholder="Project Description" className="bg-slate-900 p-2 rounded border border-slate-700" />
-                  <input id="pj-img" placeholder="Main Image URL" className="bg-slate-900 p-2 rounded border border-slate-700" />
-                  <textarea id="pj-inst" placeholder="Instructions/Logic Details" className="bg-slate-900 p-2 rounded border border-slate-700" />
+              <div className="bg-slate-800/50 p-6 rounded-3xl border border-blue-500/20 max-w-2xl mx-auto">
+                <h3 className="text-lg font-bold mb-4 text-blue-400">Publish New Project</h3>
+                <div className="space-y-3">
+                  <input id="pj-title" placeholder="Project Title" className="w-full bg-slate-900 p-3 rounded-xl border border-slate-700" />
+                  <textarea id="pj-desc" placeholder="Brief Summary" className="w-full bg-slate-900 p-3 rounded-xl border border-slate-700 h-20" />
+                  <input id="pj-img" placeholder="Image URL" className="w-full bg-slate-900 p-3 rounded-xl border border-slate-700" />
+                  <textarea id="pj-inst" placeholder="Technical Steps" className="w-full bg-slate-900 p-3 rounded-xl border border-slate-700 h-24" />
                   <button 
                     onClick={() => {
                       const t = document.getElementById('pj-title').value;
@@ -174,32 +180,30 @@ const RynjahComponent = () => {
                         alert("Project Posted!");
                       }
                     }}
-                    className="bg-blue-600 hover:bg-blue-500 p-2 rounded font-bold transition-all"
-                  >Publish to Lab</button>
+                    className="w-full bg-blue-600 p-3 rounded-xl font-bold"
+                  >Post to Lab</button>
                 </div>
               </div>
             )}
 
-            <div className="space-y-8">
-              {myProjects.map(project => (
-                <div key={project.id} className="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden shadow-xl">
-                  <div className="relative h-64 bg-slate-900">
-                    <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover" />
-                    <a href={project.imageUrl} target="_blank" rel="noreferrer" className="absolute top-4 right-4 bg-black/60 p-2 rounded-full hover:bg-blue-600 text-white transition-colors shadow-lg">
-                      <Download size={20} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {myProjects.map((project) => (
+                <div key={project.id} className="bg-slate-800/40 border border-slate-700 rounded-3xl overflow-hidden hover:border-blue-500/50 transition-all flex flex-col h-full shadow-xl">
+                  <div className="relative h-52 bg-slate-900">
+                    <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover opacity-80" />
+                    <a href={project.imageUrl} target="_blank" rel="noreferrer" className="absolute top-4 right-4 bg-black/40 p-2 rounded-full text-white">
+                      <Download size={18} />
                     </a>
                   </div>
-                  <div className="p-6">
-                    <div className="flex justify-between items-center mb-3">
-                      <h3 className="text-2xl font-bold text-blue-400">{project.title}</h3>
-                      {isLoggedIn && <button onClick={() => setMyProjects(myProjects.filter(p => p.id !== project.id))} className="text-red-500 hover:bg-red-500/10 p-2 rounded"><Trash2 size={20}/></button>}
+                  <div className="p-6 flex flex-col flex-grow">
+                    <div className="flex justify-between items-center mb-2">
+                      <h3 className="text-xl font-bold text-white">{project.title}</h3>
+                      {isLoggedIn && <button onClick={() => setMyProjects(myProjects.filter(p => p.id !== project.id))} className="text-red-500"><Trash2 size={18}/></button>}
                     </div>
-                    <p className="text-slate-300 mb-6 leading-relaxed">{project.description}</p>
-                    <div className="bg-slate-900 p-4 rounded-xl border-l-4 border-emerald-500">
-                      <h4 className="flex items-center text-xs font-black uppercase text-emerald-500 tracking-widest mb-2">
-                        <FileText size={14} className="mr-2" /> Technical Guide
-                      </h4>
-                      <p className="text-sm text-slate-400 font-mono whitespace-pre-wrap">{project.instructions}</p>
+                    <p className="text-slate-400 text-sm mb-6 line-clamp-3">{project.description}</p>
+                    <div className="mt-auto bg-slate-900/80 p-4 rounded-2xl border-l-2 border-blue-500">
+                      <p className="text-[10px] font-black uppercase text-blue-400 mb-1">Technical Guide</p>
+                      <p className="text-xs text-slate-500 font-mono line-clamp-2">{project.instructions}</p>
                     </div>
                   </div>
                 </div>
