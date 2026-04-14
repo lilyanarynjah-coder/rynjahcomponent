@@ -24,37 +24,22 @@ const RynjahComponent = () => {
       { id: 2, name: 'Arduino Uno R3', price: 650, category: 'ECE', stock: 12, image: 'https://images.unsplash.com/photo-1553406830-ef2513450d76?w=400' }
     ];
   });
- const myProjects = [
-  {
-    id: 1,
-    title: "8085 Microprocessor Setup",
-    description: "Interfacing the 8255 with the 8085 kit.",
-    imageUrl: "https://i.postimg.cc/example/8085.jpg", 
-    instructions: "1. Connect the kit. 2. Enter Hex codes."
-  },
-  {
-    id: 2,
-    title: "Blink LED using Arduino",
-    description: "Simple circuit to blink an LED every 1 second.",
-    imageUrl: "https://i.postimg.cc/example/led.jpg", 
-    instructions: "1. Pin 13 to LED. 2. Upload Blink Sketch."
-  },
-  {
-    id: 3,
-    title: "Bluetooth Control Car",
-    description: "Arduino car controlled via HC-05 and smartphone.",
-    imageUrl: "https://i.postimg.cc/example/car.jpg", 
-    instructions: "1. Pair Bluetooth. 2. Use Android App to steer."
-  },
-  {
-    id: 4,
-    title: "Your New Project Name",
-    description: "Describe what your project does here.",
-    imageUrl: "https://link-to-your-photo.jpg", 
-    instructions: "Step 1... Step 2... Step 3..."
-  }
-];
+ const [myProjects, setMyProjects] = useState(() => {
+  const saved = localStorage.getItem('rynjah_projects');
+  return saved ? JSON.parse(saved) : [
+    {
+      id: 1,
+      title: "8085 Microprocessor Setup",
+      description: "Interfacing the 8255 with the 8085 kit.",
+      imageUrl: "https://i.postimg.cc/example/8085.jpg", 
+      instructions: "1. Connect the kit. 2. Enter Hex codes."
+    }
+  ];
+});
 
+useEffect(() => {
+  localStorage.setItem('rynjah_projects', JSON.stringify(myProjects));
+}, [myProjects]);
   const ADMIN_EMAIL = "esterlangrynjah@gmail.com";
   const ADMIN_PASS = "Admin@123";
   const UPI_ID = "esterlangrynjah-1@oksbi";
@@ -153,6 +138,49 @@ const RynjahComponent = () => {
           </div>
 
           {/* Text Section */}
+          {/* --- ADMIN POST FORM START --- */}
+<div className="bg-slate-900 p-6 rounded-xl mb-10 border border-blue-500/30 shadow-xl">
+  <h3 className="text-xl font-bold mb-4 text-blue-400">Post New ECE Project</h3>
+  <div className="grid gap-4">
+    <input id="p-title" type="text" placeholder="Project Name (e.g. Arduino Bluetooth Car)" className="bg-slate-800 p-3 rounded text-white border border-slate-700 focus:border-blue-500 outline-none" />
+    <textarea id="p-desc" placeholder="Brief Description" className="bg-slate-800 p-3 rounded text-white border border-slate-700 focus:border-blue-500 outline-none" />
+    <input id="p-img" type="text" placeholder="Paste Image Link (from PostImages.org)" className="bg-slate-800 p-3 rounded text-white border border-slate-700 focus:border-blue-500 outline-none" />
+    <textarea id="p-inst" placeholder="Step-by-Step Instructions" className="bg-slate-800 p-3 rounded text-white border border-slate-700 focus:border-blue-500 outline-none" />
+    
+    <button 
+      onClick={() => {
+        const title = document.getElementById('p-title').value;
+        const desc = document.getElementById('p-desc').value;
+        const img = document.getElementById('p-img').value;
+        const inst = document.getElementById('p-inst').value;
+
+        if(!title || !desc) return alert("Please add at least a title and description!");
+
+        const newProject = {
+          id: Date.now(),
+          title: title,
+          description: desc,
+          imageUrl: img,
+          instructions: inst
+        };
+        
+        setMyProjects([newProject, ...myProjects]);
+        
+        // Clear the boxes after posting
+        document.getElementById('p-title').value = '';
+        document.getElementById('p-desc').value = '';
+        document.getElementById('p-img').value = '';
+        document.getElementById('p-inst').value = '';
+        
+        alert("Project Posted to Lab!");
+      }}
+      className="bg-blue-600 hover:bg-blue-500 text-white font-bold p-3 rounded-lg transition-all shadow-lg active:scale-95"
+    >
+      Post to Lab
+    </button>
+  </div>
+</div>
+{/* --- ADMIN POST FORM END --- */}
           <div className="p-5">
             <h3 className="text-xl font-semibold text-blue-400">{project.title}</h3>
             <p className="text-slate-300 mt-2">{project.description}</p>
