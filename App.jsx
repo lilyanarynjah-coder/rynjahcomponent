@@ -5,12 +5,11 @@ import {
   LayoutDashboard, 
   Plus, 
   Trash2, 
-  ChevronRight, 
   Phone,
   Package,
   Home
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const RynjahComponent = () => {
   const [view, setView] = useState('home');
@@ -19,16 +18,15 @@ const RynjahComponent = () => {
   const [products, setProducts] = useState(() => {
     const saved = localStorage.getItem('rynjah_products');
     return saved ? JSON.parse(saved) : [
-      { id: 1, name: '8085 Microprocessor Kit', price: 2500, category: 'Microprocessors', stock: 5, image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400' },
-      { id: 2, name: 'Arduino Uno R3', price: 650, category: 'Microcontrollers', stock: 12, image: 'https://images.unsplash.com/photo-1553406830-ef2513450d76?w=400' }
+      { id: 1, name: '8085 Microprocessor Kit', price: 2500, category: 'ECE', stock: 5, image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400' },
+      { id: 2, name: 'Arduino Uno R3', price: 650, category: 'ECE', stock: 12, image: 'https://images.unsplash.com/photo-1553406830-ef2513450d76?w=400' }
     ];
   });
 
-  // Admin Credentials
   const ADMIN_EMAIL = "esterlangrynjah@gmail.com";
   const ADMIN_PASS = "Admin@123";
-  const UPI_ID = "esterlangrynjah@okaxis"; // Replace with your real UPI
-  const WHATSAPP = "911234567890"; // Replace with your real number
+  const UPI_ID = "esterlangrynjah@okaxis";
+  const WHATSAPP = "911234567890";
 
   useEffect(() => {
     localStorage.setItem('rynjah_products', JSON.stringify(products));
@@ -68,13 +66,13 @@ const RynjahComponent = () => {
 
   const checkout = () => {
     const total = cart.reduce((sum, item) => sum + item.price, 0);
-    const message = Order from RynjahComponent:%0AItems: ${cart.map(i => i.name).join(', ')}%0ATotal: ₹${total};
+    const itemNames = cart.map(i => i.name).join(', ');
+    const message = Order from RynjahComponent:%0AItems: ${itemNames}%0ATotal: ₹${total};
     window.open(https://wa.me/${WHATSAPP}?text=${message}, '_blank');
   };
 
   return (
     <div className="min-h-screen bg-slate-900 text-white font-sans">
-      {/* Navigation */}
       <nav className="border-b border-slate-800 p-4 sticky top-0 bg-slate-900/80 backdrop-blur-md z-50">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
@@ -96,7 +94,6 @@ const RynjahComponent = () => {
         </div>
       </nav>
 
-      {/* Main Content */}
       <main className="max-w-6xl mx-auto p-6">
         {view === 'home' && (
           <div className="py-20 text-center">
@@ -109,7 +106,7 @@ const RynjahComponent = () => {
         {view === 'store' && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {products.map(product => (
-              <motion.div key={product.id} layout className="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 hover:border-blue-500 transition-colors">
+              <div key={product.id} className="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 hover:border-blue-500 transition-colors">
                 <img src={product.image} alt={product.name} className="w-full h-48 object-cover" />
                 <div className="p-4">
                   <h3 className="font-bold text-lg mb-1">{product.name}</h3>
@@ -118,7 +115,7 @@ const RynjahComponent = () => {
                     <Plus size={18}/> Add to Cart
                   </button>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         )}
@@ -127,8 +124,8 @@ const RynjahComponent = () => {
           <div className="bg-slate-800 p-8 rounded-2xl border border-slate-700">
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-2"><LayoutDashboard /> Admin Dashboard</h2>
             <form onSubmit={addProduct} className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-              <input name="name" placeholder="Item Name" className="bg-slate-900 p-3 rounded-lg border border-slate-700" required />
-              <input name="price" type="number" placeholder="Price (₹)" className="bg-slate-900 p-3 rounded-lg border border-slate-700" required />
+              <input name="name" placeholder="Item Name" className="bg-slate-900 p-3 rounded-lg border border-slate-700 text-white" required />
+              <input name="price" type="number" placeholder="Price (₹)" className="bg-slate-900 p-3 rounded-lg border border-slate-700 text-white" required />
               <button type="submit" className="bg-emerald-600 hover:bg-emerald-700 rounded-lg font-bold">Add Product</button>
             </form>
             <div className="space-y-4">
@@ -162,9 +159,9 @@ const RynjahComponent = () => {
                     <span>Total:</span>
                     <span>₹{cart.reduce((s, i) => s + i.price, 0)}</span>
                   </div>
-                  <div className="p-4 bg-blue-900/30 rounded-lg border border-blue-800 mb-6">
+                  <div className="p-4 bg-blue-900/30 rounded-lg border border-blue-800 mb-6 text-center">
                     <p className="text-sm text-blue-300 mb-2 font-bold uppercase tracking-wider">Payment Details</p>
-                    <p className="text-lg font-mono">UPI ID: {UPI_ID}</p>
+                    <p className="text-lg font-mono">UPI: {UPI_ID}</p>
                   </div>
                   <button onClick={checkout} className="w-full bg-green-600 hover:bg-green-700 py-4 rounded-xl font-bold flex items-center justify-center gap-2 text-lg">
                     <Phone size={20}/> Order via WhatsApp
@@ -175,9 +172,8 @@ const RynjahComponent = () => {
           </div>
         )}
       </main>
-
-      <footer className="mt-20 border-t border-slate-800 p-8 text-center text-slate-500">
-        <p>© 2026 RynjahComponent - Electronics Store</p>
+      <footer className="mt-20 border-t border-slate-800 p-8 text-center text-slate-500 font-mono">
+        © 2026 RynjahComponent - Electronics Store
       </footer>
     </div>
   );
