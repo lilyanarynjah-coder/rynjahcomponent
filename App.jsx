@@ -25,7 +25,7 @@ const RynjahComponent = () => {
 
   const ADMIN_EMAIL = "esterlangrynjah@gmail.com";
   const ADMIN_PASS = "Admin@123";
-  const UPI_ID = "esterlangrynjah@okaxis";
+  const UPI_ID = "esterlangrynjah-1@oksbi";
   const WHATSAPP = "916009828446";
 
   useEffect(() => {
