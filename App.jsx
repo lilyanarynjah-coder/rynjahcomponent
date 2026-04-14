@@ -160,6 +160,16 @@ const RynjahComponent = () => {
               <h2 className="text-4xl font-black text-white">Innovation Lab</h2>
               <p className="text-slate-400">Step-by-step ECE engineering guides.</p>
             </header>
+            <div className="relative max-w-md mx-auto mb-10">
+  <Search className="absolute left-4 top-3 text-slate-500" size={20} />
+  <input 
+    type="text" 
+    placeholder="Search project titles or tech..." 
+    className="w-full bg-slate-800 border border-slate-700 p-3 pl-12 rounded-xl focus:border-blue-500 outline-none transition-all"
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+  />
+</div>
             
             {isLoggedIn && (
               <div className="bg-slate-800/50 p-6 rounded-3xl border border-blue-500/20 max-w-2xl mx-auto">
@@ -185,32 +195,38 @@ const RynjahComponent = () => {
                 </div>
               </div>
             )}
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {myProjects.map((project) => (
-                <div key={project.id} className="bg-slate-800/40 border border-slate-700 rounded-3xl overflow-hidden hover:border-blue-500/50 transition-all flex flex-col h-full shadow-xl">
-                  <div className="relative h-52 bg-slate-900">
-                    <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover opacity-80" />
-                    <a href={project.imageUrl} target="_blank" rel="noreferrer" className="absolute top-4 right-4 bg-black/40 p-2 rounded-full text-white">
-                      <Download size={18} />
-                    </a>
-                  </div>
-                  <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex justify-between items-center mb-2">
-                      <h3 className="text-xl font-bold text-white">{project.title}</h3>
-                      {isLoggedIn && <button onClick={() => setMyProjects(myProjects.filter(p => p.id !== project.id))} className="text-red-500"><Trash2 size={18}/></button>}
-                    </div>
-                    <p className="text-slate-400 text-sm mb-6 line-clamp-3">{project.description}</p>
-                    <div className="mt-auto bg-slate-900/80 p-4 rounded-2xl border-l-2 border-blue-500">
-                      <p className="text-[10px] font-black uppercase text-blue-400 mb-1">Technical Guide</p>
-                      <p className="text-xs text-slate-500 font-mono line-clamp-2">{project.instructions}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  {myProjects
+    .filter(project => 
+      project.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      project.description.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .map((project, index) => (
+      <div key={project.id} className="bg-slate-800/40 border border-slate-700 rounded-3xl overflow-hidden hover:border-blue-500/50 transition-all flex flex-col h-full shadow-xl">
+        <div className="relative h-52 bg-slate-900">
+          <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover opacity-80" />
+          <div className="absolute top-4 right-4 flex gap-2">
+            <a href={project.imageUrl} target="_blank" rel="noreferrer" className="bg-black/40 p-2 rounded-full text-white hover:bg-blue-600">
+              <Download size={18} />
+            </a>
+            {isLoggedIn && (
+              <button onClick={() => setMyProjects(myProjects.filter(p => p.id !== project.id))} className="bg-black/40 p-2 rounded-full text-white hover:bg-red-500">
+                <Trash2 size={18}/>
+              </button>
+            )}
           </div>
-        )}
+        </div>
+        <div className="p-6 flex flex-col flex-grow">
+          <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
+          <p className="text-slate-400 text-sm mb-6 line-clamp-3">{project.description}</p>
+          <div className="mt-auto bg-slate-900/80 p-4 rounded-2xl border-l-2 border-blue-500">
+            <p className="text-[10px] font-black uppercase text-blue-400 mb-1">Technical Guide</p>
+            <p className="text-xs text-slate-500 font-mono line-clamp-2">{project.instructions}</p>
+          </div>
+        </div>
+      </div>
+    ))}
+</div>
 
         {/* HOME VIEW */}
         {view === 'home' && (
