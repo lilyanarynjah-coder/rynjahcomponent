@@ -86,7 +86,7 @@ const RynjahComponent = () => {
             <button onClick={() => setView('store')} className="hover:text-blue-400 flex items-center gap-1"><Package size={18}/> Store</button>
             <button 
             onClick={() => setView('projects')} 
-            className={flex items-center gap-2 ${view === 'projects' ? 'text-blue-400' : 'text-slate-400'}}
+            className={`flex items-center gap-2 ${view === 'projects' ? 'text-blue-400' : 'text-slate-400'}`}
           >
             <LayoutDashboard size={20} />
             <span>Project Lab</span>
