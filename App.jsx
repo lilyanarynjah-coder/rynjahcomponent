@@ -77,7 +77,7 @@ const RynjahComponent = () => {
   const checkout = () => {
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     const itemNames = cart.map(i => i.name).join(', ');
-    const message = Order from RynjahComponent:%0AItems: ${itemNames}%0ATotal: ₹${total};
+    const message = `Order from RynjahComponent:%0AItems: ${itemNames}%0ATotal: ₹${total}`;
     window.open(`https://wa.me/${WHATSAPP}?text=${message}`, '_blank');
   };
 
@@ -92,7 +92,7 @@ const RynjahComponent = () => {
           <div className="flex gap-6 items-center">
             <button onClick={() => setView('home')} className="hover:text-blue-400 flex items-center gap-1"><Home size={18}/> Home</button>
             <button onClick={() => setView('store')} className="hover:text-blue-400 flex items-center gap-1"><Package size={18}/> Store</button>
-            <button onClick={() => setView('projects')} className={flex items-center gap-2 ${view === 'projects' ? 'text-blue-400' : 'text-slate-400'}}>
+            <button onClick={() => setView('projects')} className={`flex items-center gap-2 ${view === 'projects' ? 'text-blue-400' : 'text-slate-400'}`}>
               <LayoutDashboard size={20} />
               <span>Project Lab</span>
             </button>
@@ -116,7 +116,7 @@ const RynjahComponent = () => {
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold mb-8 text-center text-white">Engineering Project Feed</h2>
             
-            {/* ADMIN FORM: Only visible when logged in */}
+            {/* ADMIN FORM */}
             {isLoggedIn && (
               <div className="bg-slate-800 p-6 rounded-xl mb-12 border border-blue-500/30 shadow-2xl">
                 <h3 className="text-xl font-bold mb-4 text-blue-400">Admin: Post New Project</h3>
@@ -156,7 +156,6 @@ const RynjahComponent = () => {
                     ) : (
                       <ImageIcon size={48} className="text-slate-700" />
                     )}
-                    {/* Public Download Button */}
                     {project.imageUrl && (
                       <a href={project.imageUrl} download className="absolute top-4 right-4 bg-black/50 p-2 rounded-full hover:bg-blue-600 text-white transition-colors">
                         <Download size={20} />
