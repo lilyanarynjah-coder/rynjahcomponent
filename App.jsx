@@ -154,9 +154,16 @@ const RynjahComponent = () => {
                 {cart.map((item, idx) => (
                   <div key={idx} className="flex justify-between items-center bg-slate-800 p-4 rounded-xl border border-slate-700">
                     <div>
-                      <h4 className="font-bold">{item.name}</h4>
-                      <p className="text-blue-400">₹{item.price}</p>
+                      <h4 className="font-bold text-white">{item.name}</h4>
+                      <p className="text-blue-400 font-mono text-sm">₹{item.price}</p>
                     </div>
+                    {/* This is the new Cancel button */}
+                    <button 
+                      onClick={() => setCart(cart.filter((_, i) => i !== idx))}
+                      className="text-red-400 hover:text-red-300 p-2 hover:bg-red-400/10 rounded-lg transition-colors"
+                    >
+                      <Trash2 size={20} />
+                    </button>
                   </div>
                 ))}
                 <div className="border-t border-slate-700 pt-4 mt-8">
