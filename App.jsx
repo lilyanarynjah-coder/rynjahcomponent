@@ -12,7 +12,7 @@ import {
 import { motion } from 'framer-motion';
 
 const RynjahComponent = () => {
-  const [view, setView] = useState('home');
+  const [view, setView] = useState('projects');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cart, setCart] = useState([]);
   const [products, setProducts] = useState(() => {
@@ -84,6 +84,13 @@ const RynjahComponent = () => {
           <div className="flex gap-6 items-center">
             <button onClick={() => setView('home')} className="hover:text-blue-400 flex items-center gap-1"><Home size={18}/> Home</button>
             <button onClick={() => setView('store')} className="hover:text-blue-400 flex items-center gap-1"><Package size={18}/> Store</button>
+            <button 
+            onClick={() => setView('projects')} 
+            className={flex items-center gap-2 ${view === 'projects' ? 'text-blue-400' : 'text-slate-400'}}
+          >
+            <LayoutDashboard size={20} />
+            <span>Project Lab</span>
+          </button>
             <button onClick={() => setView('cart')} className="relative hover:text-blue-400">
               <ShoppingCart size={22} />
               {cart.length > 0 && <span className="absolute -top-2 -right-2 bg-blue-500 text-xs rounded-full w-5 h-5 flex items-center justify-center">{cart.length}</span>}
@@ -106,6 +113,31 @@ const RynjahComponent = () => {
           </div>
         )}
 
+        {view === 'projects' && (
+          <div className="max-w-6xl mx-auto p-6">
+            <h2 className="text-3xl font-bold text-white mb-8 text-center underline decoration-blue-500">ECE Project Lab</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {products.filter(p => p.price === 0).map(project => (
+                <div key={project.id} className="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden shadow-2xl">
+                  <img src={project.image} alt={project.name} className="w-full h-64 object-cover border-b border-slate-700" />
+                  <div className="p-6">
+                    <h3 className="text-2xl font-bold text-white mb-3">{project.name}</h3>
+                    <div className="bg-slate-900/80 p-5 rounded-xl border border-slate-700 mb-4">
+                      <h4 className="text-blue-400 text-xs font-bold uppercase tracking-widest mb-2">Circuit Specs & Components</h4>
+                      <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-wrap font-mono">
+                        {project.description}
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <span className="bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full text-xs border border-emerald-500/20 font-bold">SCHEMATIC READY</span>
+                      <span className="bg-blue-500/10 text-blue-400 px-3 py-1 rounded-full text-xs border border-blue-500/20">EDUCATIONAL</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         {view === 'store' && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {products.map(product => (
