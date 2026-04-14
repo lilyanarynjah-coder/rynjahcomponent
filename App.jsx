@@ -66,8 +66,8 @@ const RynjahComponent = () => {
   const checkout = () => {
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     const itemNames = cart.map(i => i.name).join(', ');
-    const message = Order from RynjahComponent:%0AItems: ${itemNames}%0ATotal: ₹${total};
-    window.open(https://wa.me/${WHATSAPP}?text=${message}, '_blank');
+    const message = `Order from RynjahComponent:%0AItems: ${itemNames}%0ATotal: ₹${total}`;
+    window.open(`https://wa.me/${WHATSAPP}?text=${message}`, '_blank');
   };
 
   return (
