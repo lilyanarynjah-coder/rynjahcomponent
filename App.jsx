@@ -26,7 +26,7 @@ const RynjahComponent = () => {
   const ADMIN_EMAIL = "esterlangrynjah@gmail.com";
   const ADMIN_PASS = "Admin@123";
   const UPI_ID = "esterlangrynjah@okaxis";
-  const WHATSAPP = "911234567890";
+  const WHATSAPP = "916009828446";
 
   useEffect(() => {
     localStorage.setItem('rynjah_products', JSON.stringify(products));
