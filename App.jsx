@@ -47,18 +47,22 @@ const RynjahComponent = () => {
     setCart([...cart, product]);
     alert(`${product.name} added to cart!`);
   };
-  const addProduct = (e) => {
+ const addProduct = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const price = Number(e.target.price.value);
+    const imageUrl = e.target.imageUrl.value;
+    const description = e.target.description.value; 
+    
     const newProduct = {
       id: Date.now(),
       name,
       price,
-      category: 'General',
-      stock: 10,
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400'
+      description,
+      category: price > 0 ? 'Store' : 'Project',
+      image: imageUrl || 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400'
     };
+    
     setProducts([...products, newProduct]);
     e.target.reset();
   };
@@ -122,10 +126,12 @@ const RynjahComponent = () => {
         {view === 'admin' && isLoggedIn && (
           <div className="bg-slate-800 p-8 rounded-2xl border border-slate-700">
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-2"><LayoutDashboard /> Admin Dashboard</h2>
-            <form onSubmit={addProduct} className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-              <input name="name" placeholder="Item Name" className="bg-slate-900 p-3 rounded-lg border border-slate-700 text-white" required />
-              <input name="price" type="number" placeholder="Price (₹)" className="bg-slate-900 p-3 rounded-lg border border-slate-700 text-white" required />
-              <button type="submit" className="bg-emerald-600 hover:bg-emerald-700 rounded-lg font-bold">Add Product</button>
+           <form onSubmit={addProduct} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              <input name="name" placeholder="Project or Component Name" className="bg-slate-900 p-3 rounded-lg border border-slate-700 text-white" required />
+              <input name="price" type="number" placeholder="Price (₹0 for projects)" className="bg-slate-900 p-3 rounded-lg border border-slate-700 text-white" />
+              <input name="imageUrl" placeholder="Image URL (Link to photo)" className="bg-slate-900 p-3 rounded-lg border border-slate-700 text-white" />
+              <textarea name="description" placeholder="Project details (e.g. 8085 Assembly logic, sensors used...)" className="bg-slate-900 p-3 rounded-lg border border-slate-700 text-white md:col-span-2" rows="3"></textarea>
+              <button type="submit" className="bg-emerald-600 hover:bg-emerald-700 rounded-lg font-bold py-3 md:col-span-2">Post to Website</button>
             </form>
             <div className="space-y-4">
               {products.map(p => (
