@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  ShoppingCart, 
-  User, 
-  LayoutDashboard, 
-  Plus, 
-  Trash2, 
+import {
+  ShoppingCart,
+  User,
+  LayoutDashboard,
+  Plus,
+  Trash2,
   Phone,
   Package,
-  Home
+  Home,
+  Image as ImageIcon,
+  FileText           
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -22,6 +24,15 @@ const RynjahComponent = () => {
       { id: 2, name: 'Arduino Uno R3', price: 650, category: 'ECE', stock: 12, image: 'https://images.unsplash.com/photo-1553406830-ef2513450d76?w=400' }
     ];
   });
+  const myProjects = [
+  {
+    id: 1,
+    title: "Microprocessor 8085 Setup",
+    description: "Connecting the 8255 PPI to the 8085 trainer kit.",
+    imageUrl: "https://your-image-link.com/photo.jpg", // Replace with your image URL
+    instructions: "Step 1: Connect the data bus..."
+  }
+];
 
   const ADMIN_EMAIL = "esterlangrynjah@gmail.com";
   const ADMIN_PASS = "Admin@123";
@@ -103,6 +114,40 @@ const RynjahComponent = () => {
           </div>
         </div>
       </nav>
+      {/* This section handles what shows up in the Project Lab */}
+{view === 'projects' && (
+  <div className="p-6 max-w-4xl mx-auto">
+    <h2 className="text-2xl font-bold mb-6 text-white">Engineering Project Feed</h2>
+    
+    <div className="grid gap-8">
+      {myProjects.map((project) => (
+        <div key={project.id} className="bg-slate-800 rounded-xl overflow-hidden shadow-lg border border-slate-700">
+          {/* Image Section */}
+          <div className="h-64 bg-slate-900 flex items-center justify-center">
+            {project.imageUrl ? (
+              <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover" />
+            ) : (
+              <ImageIcon size={48} className="text-slate-600" />
+            )}
+          </div>
+
+          {/* Text Section */}
+          <div className="p-5">
+            <h3 className="text-xl font-semibold text-blue-400">{project.title}</h3>
+            <p className="text-slate-300 mt-2">{project.description}</p>
+            
+            <div className="mt-4 p-3 bg-slate-900 rounded border-l-4 border-blue-500">
+              <h4 className="flex items-center text-sm font-bold uppercase text-slate-400">
+                <FileText size={14} className="mr-2" /> How to follow:
+              </h4>
+              <p className="text-sm text-slate-400 mt-1">{project.instructions}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
 
       <main className="max-w-6xl mx-auto p-6">
         {view === 'home' && (
