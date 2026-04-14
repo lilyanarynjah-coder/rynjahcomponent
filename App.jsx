@@ -24,7 +24,7 @@ const RynjahComponent = () => {
       { id: 2, name: 'Arduino Uno R3', price: 650, category: 'ECE', stock: 12, image: 'https://images.unsplash.com/photo-1553406830-ef2513450d76?w=400' }
     ];
   });
- const [myProjects, setMyProjects] = useState(() => {
+const [myProjects, setMyProjects] = useState(() => {
   const saved = localStorage.getItem('rynjah_projects');
   return saved ? JSON.parse(saved) : [
     {
@@ -36,6 +36,10 @@ const RynjahComponent = () => {
     }
   ];
 });
+
+useEffect(() => {
+  localStorage.setItem('rynjah_projects', JSON.stringify(myProjects));
+}, [myProjects]);
 
 useEffect(() => {
   localStorage.setItem('rynjah_projects', JSON.stringify(myProjects));
@@ -139,47 +143,48 @@ useEffect(() => {
 
           {/* Text Section */}
           {/* --- ADMIN POST FORM START --- */}
-<div className="bg-slate-900 p-6 rounded-xl mb-10 border border-blue-500/30 shadow-xl">
-  <h3 className="text-xl font-bold mb-4 text-blue-400">Post New ECE Project</h3>
-  <div className="grid gap-4">
-    <input id="p-title" type="text" placeholder="Project Name (e.g. Arduino Bluetooth Car)" className="bg-slate-800 p-3 rounded text-white border border-slate-700 focus:border-blue-500 outline-none" />
-    <textarea id="p-desc" placeholder="Brief Description" className="bg-slate-800 p-3 rounded text-white border border-slate-700 focus:border-blue-500 outline-none" />
-    <input id="p-img" type="text" placeholder="Paste Image Link (from PostImages.org)" className="bg-slate-800 p-3 rounded text-white border border-slate-700 focus:border-blue-500 outline-none" />
-    <textarea id="p-inst" placeholder="Step-by-Step Instructions" className="bg-slate-800 p-3 rounded text-white border border-slate-700 focus:border-blue-500 outline-none" />
-    
-    <button 
-      onClick={() => {
-        const title = document.getElementById('p-title').value;
-        const desc = document.getElementById('p-desc').value;
-        const img = document.getElementById('p-img').value;
-        const inst = document.getElementById('p-inst').value;
+{isLoggedIn && (
+  <div className="bg-slate-900 p-6 rounded-xl mb-10 border border-blue-500/30">
+    <h3 className="text-xl font-bold mb-4 text-blue-400">Admin: Post New Project</h3>
+    <div className="grid gap-4">
+      <input id="p-title" type="text" placeholder="Project Name" className="bg-slate-800 p-3 rounded text-white" />
+      <textarea id="p-desc" placeholder="Description" className="bg-slate-800 p-3 rounded text-white" />
+      <input id="p-img" type="text" placeholder="Image Link" className="bg-slate-800 p-3 rounded text-white" />
+      <textarea id="p-inst" placeholder="Instructions" className="bg-slate-800 p-3 rounded text-white" />
+      
+      <button 
+        onClick={() => {
+          const title = document.getElementById('p-title').value;
+          const desc = document.getElementById('p-desc').value;
+          const img = document.getElementById('p-img').value;
+          const inst = document.getElementById('p-inst').value;
 
-        if(!title || !desc) return alert("Please add at least a title and description!");
+          if(!title || !desc) return alert("Fill in the title and description!");
 
-        const newProject = {
-          id: Date.now(),
-          title: title,
-          description: desc,
-          imageUrl: img,
-          instructions: inst
-        };
-        
-        setMyProjects([newProject, ...myProjects]);
-        
-        // Clear the boxes after posting
-        document.getElementById('p-title').value = '';
-        document.getElementById('p-desc').value = '';
-        document.getElementById('p-img').value = '';
-        document.getElementById('p-inst').value = '';
-        
-        alert("Project Posted to Lab!");
-      }}
-      className="bg-blue-600 hover:bg-blue-500 text-white font-bold p-3 rounded-lg transition-all shadow-lg active:scale-95"
-    >
-      Post to Lab
-    </button>
+          const newProject = {
+            id: Date.now(),
+            title: title,
+            description: desc,
+            imageUrl: img,
+            instructions: inst
+          };
+          
+          setMyProjects([newProject, ...myProjects]);
+          alert("Project Posted Successfully!");
+          
+          // Clear inputs
+          document.getElementById('p-title').value = '';
+          document.getElementById('p-desc').value = '';
+          document.getElementById('p-img').value = '';
+          document.getElementById('p-inst').value = '';
+        }}
+        className="bg-blue-600 hover:bg-blue-500 p-3 rounded-lg font-bold"
+      >
+        Post to Lab
+      </button>
+    </div>
   </div>
-</div>
+)}
 {/* --- ADMIN POST FORM END --- */}
           <div className="p-5">
             <h3 className="text-xl font-semibold text-blue-400">{project.title}</h3>
