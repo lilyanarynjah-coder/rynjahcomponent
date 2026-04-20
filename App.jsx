@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const RynjahComponent = () => {
+const RynjahandPekaComponent = () => {
   const [view, setView] = useState('home');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cart, setCart] = useState([]);
@@ -68,7 +68,7 @@ const RynjahComponent = () => {
   const checkout = () => {
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     const itemNames = cart.map(i => i.name).join(', ');
-    const message = "Order from RynjahComponent:%0AItems: " + itemNames + "%0ATotal: ₹" + total;
+    const message = "Order from RynjahandPekaComponent:%0AItems: " + itemNames + "%0ATotal: ₹" + total;
     window.open("https://wa.me/" + WHATSAPP + "?text=" + message, '_blank');
   };
 
@@ -78,7 +78,7 @@ const RynjahComponent = () => {
       <nav className="border-b border-slate-800 p-4 sticky top-0 bg-slate-900/80 backdrop-blur-md z-50">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent cursor-pointer" onClick={() => setView('home')}>
-            RynjahComponent
+            RynjahandPekaComponent
           </h1>
           <div className="flex gap-6 items-center">
             <button onClick={() => setView('home')} className="hover:text-blue-400 transition-colors">Home</button>
@@ -268,4 +268,4 @@ const RynjahComponent = () => {
   );
 };
 
-export default RynjahComponent;
+export default RynjahandPekaComponent;
